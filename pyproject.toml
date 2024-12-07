@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "myproject"
+version = "0.1.0"
+description = "My Django project"
+authors = ["InvisUA <xndell001@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1.2"
+pymongo = "^4.10.1"
+psycopg2 = "^2.9.10"
+scrapy = "^2.11.2"
+django-environ = "^0.11.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

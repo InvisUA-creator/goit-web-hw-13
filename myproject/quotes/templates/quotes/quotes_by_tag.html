@@ -1,0 +1,59 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Quotes tagged with "{{ tag.name }}"</h2>
+    <div class="row">
+        <div class="col-md-8">
+            {% for quote in quotes %}
+            <div class="quote" itemscope="" itemtype="http://schema.org/CreativeWork">
+                <span class="text" itemprop="text">
+                    {{ quote.quote }}
+                </span>
+                <span>by <small class="author" itemprop="author">
+                    {{ quote.author }}
+                </small>
+                <a href="{% url 'quotes:author_detail' author_id=quote.author %}">(about)</a>
+                </span>
+                <div class="tags">
+                    Tags:
+                    {% for tag in quote.tags.all %}
+                    <a class="tag" href="{% url 'quotes:quotes_by_tag' tag %}">{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            <nav>
+                <ul class="pager">
+                    <li class="previous">
+                        <a class="{% if not quotes.has_previous %} disabled {% endif %}"
+                           href="{% if quotes.has_previous %} {% url 'quotes:quotes_by_tag' tag.name quotes.previous_page_number %} {% else %} # {% endif %}">
+                            <span aria-hidden="true">←</span> Previous
+                        </a>
+                    </li>
+                    <li class="next">
+                        <a class="{% if not quotes.has_next %} disabled {% endif %}"
+                           href="{% if quotes.has_next %} {% url 'quotes:quotes_by_tag' tag.name quotes.next_page_number %} {% else %} # {% endif %}">
+                            Next<span aria-hidden="true">→</span></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-md-4 position-fixed" style="top: 100px; right: 20px; width: 300px;">
+            <div class="top-tags mb-4">
+                <h3>Top Ten Tags</h3>
+                <div class="tags-list">
+                    {% for tag in top_tags %}
+                        {% with font_size=10|add:tag.num_quotes|stringformat:"d" %}
+                        <div class="tag-item" style="font-size: {{ font_size }}px;">
+                            <a href="{% url 'quotes:quotes_by_tag' tag.name %}" class="tag" style="font-size: {{ font_size }}px;">
+                            {{ tag.name }}</a>
+                        </div>
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

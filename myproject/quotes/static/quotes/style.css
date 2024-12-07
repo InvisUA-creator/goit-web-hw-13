@@ -1,0 +1,39 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Add a New Quote</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            {{ form.quote.label_tag }}
+            {{ form.quote }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.author.label_tag }}
+            {{ form.author }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.existing_tags.label_tag }}
+            <div class="form-check">
+                {% for tag in form.existing_tags %}
+                    <label class="form-check-label">
+                        {{ tag }}
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            {{ form.new_tags.label_tag }}
+            {{ form.new_tags }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Quote</button>
+        <button type="reset" class="secondary">Reset</button>
+    </form>
+</div>
+{% endblock %}

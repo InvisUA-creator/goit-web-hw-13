@@ -1,0 +1,63 @@
+{% extends "quotes/base.html" %}
+
+{% block content %}
+
+<style>
+    form div {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+    textarea {
+        height: 12em;
+    }
+    .grid {
+        display: inline-flex;
+        flex-direction: row;
+        width: 30%;
+        gap: 10px;
+        padding-top: 10px;
+    }
+</style>
+
+<h2>Add a New Author</h2>
+<form method="POST" action="{% url 'quotes:author_add' %}">
+    {% csrf_token %}
+    <div style="padding: 10px">
+        <label>Fullname:
+            {{ form.fullname }}
+        </label>
+        <span>{{ form.errors.fullname }}</span>
+    </div>
+    <div style="padding: 10px">
+        <label>Born date:
+            {{ form.born_date }}
+        </label>
+        <span>{{ form.errors.born_date }}</span>
+    </div>
+    <div style="padding: 10px">
+        <label>Born location:
+            {{ form.born_location }}
+        </label>
+        <span>{{ form.errors.born_location }}</span>
+    </div>
+    <div style="padding: 10px">
+        <label>Description:
+            {{ form.description }}
+        </label>
+        <span>{{ form.errors.description }}</span>
+    </div>
+
+    <div class="grid">
+        <button type="submit" class="btn btn-primary">Add Author</button>
+        <button type="reset" class="secondary">Reset</button>
+    </div>
+</form>
+
+{% endblock %}
